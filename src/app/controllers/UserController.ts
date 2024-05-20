@@ -14,6 +14,7 @@ export class UserController {
     this.router.post("/", this.createUser);
     this.router.get("/", this.getUser);
     this.router.put("/:id", this.updateUser);
+    this.router.delete("/:id", this.deleteUser);
   }
 
   private async getAllUsers(req: Request, res: Response) {
@@ -37,6 +38,12 @@ export class UserController {
     const id = parseInt(req.params.id);
     const userUpdated = await UserRepository.updateUser(id, req.body);
     return res.status(201).json({ message: userUpdated });
+  }
+
+  private async deleteUser(req: Request, res: Response) {
+    const id = parseInt(req.params.id);
+    const userDeleted = await UserRepository.delete(id);
+    return res.status(200).json({ message: userDeleted });
   }
 }
 

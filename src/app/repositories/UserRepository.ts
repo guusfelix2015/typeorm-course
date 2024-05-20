@@ -2,6 +2,7 @@ import { User } from "../entities/User";
 import { AppDataSource } from "../../database/dataSource";
 import { IUserInput, IUserOutput } from "../interfaces/IUser";
 import { ErrorExtension } from "../utils/ErrorExtension";
+import { userSchemaValidation } from "../utils/validations/userSchemaValidation";
 
 export class UserRepository {
   private static usersRepository = AppDataSource.getRepository(User);
@@ -11,6 +12,15 @@ export class UserRepository {
   }
 
   static async newUser(user: IUserInput): Promise<IUserOutput> {
+    const { error } = userSchemaValidation.validate(user, {
+      abortEarly: false,
+    });
+
+    if (error) {
+      const validateErrors = error.details.map((err) => err.message);
+      throw new ErrorExtension(validateErrors.join(", "), 400);
+    }
+
     const createdUser = await this.usersRepository.save(user);
     return createdUser;
   }
@@ -35,9 +45,20 @@ export class UserRepository {
       throw new ErrorExtension("User not found", 404);
     }
 
-    const userUpdated = await this.usersRepository.update(id, user);
-    console.log(userUpdated);
+    await this.usersRepository.update(id, user);
 
     return "User updated";
+  }
+
+  static async delete(id: number): Promise<string | null> {
+    const userExists = await this.usersRepository.findOneBy({ id });
+
+    if (!userExists) {
+      throw new ErrorExtension("User not found", 404);
+    }
+
+    await this.usersRepository.delete(id);
+
+    return "User deelted";
   }
 }
