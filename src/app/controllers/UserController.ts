@@ -12,7 +12,7 @@ export class UserController {
   private initializeRoutes() {
     this.router.get("/", this.getAllUsers);
     this.router.post("/", this.createUser);
-    this.router.get("/", this.getUser);
+    this.router.get("/:id", this.getUser);
     this.router.put("/:id", this.updateUser);
     this.router.delete("/:id", this.deleteUser);
   }
@@ -31,7 +31,7 @@ export class UserController {
   private async getUser(req: Request, res: Response) {
     const id = parseInt(req.params.id);
     const user = await UserRepository.getUser(id);
-    res.status(200).json(user);
+    return res.status(200).json(user);
   }
 
   private async updateUser(req: Request, res: Response) {

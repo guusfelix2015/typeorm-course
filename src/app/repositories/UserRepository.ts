@@ -1,14 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { User } from "../entities/User";
 import { AppDataSource } from "../../database/dataSource";
 import { IUserInput, IUserOutput } from "../interfaces/IUser";
 import { ErrorExtension } from "../utils/ErrorExtension";
 import { userSchemaValidation } from "../utils/validations/userSchemaValidation";
+import bcrypt from "bcrypt";
 
 export class UserRepository {
   private static usersRepository = AppDataSource.getRepository(User);
 
   static async getUsers(): Promise<IUserOutput[]> {
-    return this.usersRepository.find();
+    const users = await this.usersRepository.find();
+
+    return users.map(({ password, ...user }) => user);
   }
 
   static async newUser(user: IUserInput): Promise<IUserOutput> {
@@ -21,6 +25,10 @@ export class UserRepository {
       throw new ErrorExtension(validateErrors.join(", "), 400);
     }
 
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+
+    user.password = hashedPassword;
+
     const createdUser = await this.usersRepository.save(user);
     return createdUser;
   }
@@ -32,7 +40,9 @@ export class UserRepository {
       throw new ErrorExtension("User not found", 404);
     }
 
-    return user;
+    const { password, ...userWithoutPassword } = user;
+
+    return userWithoutPassword;
   }
 
   static async updateUser(
@@ -43,6 +53,12 @@ export class UserRepository {
 
     if (!userExists) {
       throw new ErrorExtension("User not found", 404);
+    }
+
+    if (user.password) {
+      const hashedPassword = await bcrypt.hash(user.password, 10);
+
+      user.password = hashedPassword;
     }
 
     await this.usersRepository.update(id, user);
