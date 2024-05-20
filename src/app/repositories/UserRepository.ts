@@ -24,4 +24,20 @@ export class UserRepository {
 
     return user;
   }
+
+  static async updateUser(
+    id: number,
+    user: IUserInput,
+  ): Promise<string | null> {
+    const userExists = await this.usersRepository.findOneBy({ id });
+
+    if (!userExists) {
+      throw new ErrorExtension("User not found", 404);
+    }
+
+    const userUpdated = await this.usersRepository.update(id, user);
+    console.log(userUpdated);
+
+    return "User updated";
+  }
 }
