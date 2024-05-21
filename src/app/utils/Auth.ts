@@ -1,7 +1,7 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 import dotenv from "dotenv";
-import { ITokenData } from "../../interfaces/ILogin";
-import { ErrorExtension } from "../ErrorExtension";
+import { ITokenData } from "../interfaces/ILogin";
+import { ErrorExtension } from "./ErrorExtension";
 
 dotenv.config();
 
@@ -19,11 +19,11 @@ export class Auth {
     }
   }
 
-  public jwtGenerator(payload: ITokenData) {
+  public JwtGenerator(payload: ITokenData) {
     return jwt.sign(payload, secret, this.jwtConfig);
   }
 
-  public authenticationToken(token: string) {
+  public AuthenticationToken(token: string) {
     if (!token) {
       throw new ErrorExtension("Token not found", 401);
     }

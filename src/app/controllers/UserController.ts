@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
 import { UserRepository } from "../repositories/UserRepository";
+import { authenticateMiddleware } from "../middlewares/AuthMiddleware";
 
 export class UserController {
   public router: Router;
@@ -12,9 +13,10 @@ export class UserController {
   private initializeRoutes() {
     this.router.get("/", this.getAllUsers);
     this.router.post("/", this.createUser);
-    this.router.get("/:id", this.getUser);
+    this.router.get("/:id", authenticateMiddleware, this.getUser);
     this.router.put("/:id", this.updateUser);
     this.router.delete("/:id", this.deleteUser);
+    this.router.post("/auth", this.authUser);
   }
 
   private async getAllUsers(req: Request, res: Response) {
@@ -44,6 +46,12 @@ export class UserController {
     const id = parseInt(req.params.id);
     const userDeleted = await UserRepository.delete(id);
     return res.status(200).json({ message: userDeleted });
+  }
+
+  private async authUser(req: Request, res: Response) {
+    const { body } = req;
+    const token = await UserRepository.authenticateUser(body);
+    return res.status(201).json(token);
   }
 }
 

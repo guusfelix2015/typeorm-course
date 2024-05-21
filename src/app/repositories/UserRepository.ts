@@ -5,6 +5,8 @@ import { IUserInput, IUserOutput } from "../interfaces/IUser";
 import { ErrorExtension } from "../utils/ErrorExtension";
 import { userSchemaValidation } from "../utils/validations/userSchemaValidation";
 import bcrypt from "bcrypt";
+import { ILogin } from "../interfaces/ILogin";
+import { Auth } from "../utils/Auth";
 
 export class UserRepository {
   private static usersRepository = AppDataSource.getRepository(User);
@@ -76,5 +78,40 @@ export class UserRepository {
     await this.usersRepository.delete(id);
 
     return "User deelted";
+  }
+
+  static async getUserByEmail(email: string): Promise<IUserOutput | null> {
+    return this.usersRepository.findOneBy({ email });
+  }
+
+  static async authenticateUser(loginData: ILogin): Promise<string> {
+    const { email, password } = loginData;
+
+    if (!email || !password) {
+      throw new ErrorExtension("Missing data", 400);
+    }
+
+    const user = await this.getUserByEmail(email);
+
+    if (!user) {
+      throw new ErrorExtension("User not found", 404);
+    }
+
+    const passwordVerification = await bcrypt.compare(
+      password,
+      user.password ?? "",
+    );
+
+    if (!passwordVerification) {
+      throw new ErrorExtension("Invalid password", 401);
+    }
+
+    const payload = {
+      name: user.name,
+      email: user.email,
+    };
+    const tokenGenerator = new Auth();
+    const token = tokenGenerator.JwtGenerator(payload);
+    return token;
   }
 }
