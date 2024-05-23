@@ -5,6 +5,7 @@ import { CreateSeedUsersTable1716052161507 } from "./migrations/1716052161507-Cr
 import { CreateAddressTable1716322566903 } from "./migrations/1716322566903-CreateAddressTable";
 
 import { User } from "../app/entities/User";
+import { Address } from "../app/entities/Address";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -15,7 +16,7 @@ export const AppDataSource = new DataSource({
   database: "curso_typeorm",
   synchronize: true,
   logging: false,
-  entities: [User],
+  entities: [User, Address],
   migrations: [
     CreateUsersTable1716046496279,
     CreateSeedUsersTable1716052161507,

@@ -12,7 +12,7 @@ export class UserRepository {
   private static usersRepository = AppDataSource.getRepository(User);
 
   static async getUsers(): Promise<IUserOutput[]> {
-    const users = await this.usersRepository.find();
+    const users = await this.usersRepository.find({ relations: ["address"] });
 
     return users.map(({ password, ...user }) => user);
   }
