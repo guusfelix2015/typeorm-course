@@ -8,6 +8,8 @@ import { CreateUserProject1716493475456 } from "./migrations/1716493475456-Creat
 
 import { User } from "../app/entities/User";
 import { Address } from "../app/entities/Address";
+import { Project } from "../app/entities/Project";
+import { UserProject } from "../app/entities/UserProject";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -18,7 +20,7 @@ export const AppDataSource = new DataSource({
   database: "curso_typeorm",
   synchronize: true,
   logging: false,
-  entities: [User, Address],
+  entities: [User, Address, Project, UserProject],
   migrations: [
     CreateUsersTable1716046496279,
     CreateSeedUsersTable1716052161507,
