@@ -8,6 +8,10 @@ import {
   IUserProjectInput,
   IUserProjectOutput,
 } from "../interfaces/IUserProject";
+import { IProjectInput } from "../interfaces/IProject";
+import { User } from "../entities/User";
+import { IUserInput, IUserOutput } from "../interfaces/IUser";
+import { Project } from "../entities/Project";
 export class UserProjectRepository {
   private static userProjectRepository =
     AppDataSource.getRepository(UserProject);
@@ -64,5 +68,32 @@ export class UserProjectRepository {
   static async removeUserProject(id: number): Promise<string> {
     await this.userProjectRepository.delete(id);
     return "Project removed successfully";
+  }
+
+  static async createAll(data: {
+    user: IUserInput;
+    project: IProjectInput;
+    user_project: IUserProjectInput;
+  }): Promise<{
+    user: IUserOutput;
+    project: IProjectInput;
+    user_project: IUserProjectOutput;
+  }> {
+    const createdData = await AppDataSource.transaction(
+      async (transactionalEntityManager) => {
+        const user = await transactionalEntityManager.save(User, data.user);
+        const project = await transactionalEntityManager.save(
+          Project,
+          data.project,
+        );
+        const userProject = await transactionalEntityManager.save(UserProject, {
+          hours_worked: data.user_project.hours_worked,
+          user_id: user.id,
+          project_id: project.id,
+        });
+        return { user, project, user_project: userProject };
+      },
+    );
+    return createdData;
   }
 }

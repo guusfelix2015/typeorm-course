@@ -15,6 +15,7 @@ export class UserProjectController {
     this.router.get("/:id", this.getUserProject);
     this.router.put("/:id", this.updateUserProject);
     this.router.delete("/:id", this.deleteUserProject);
+    this.router.post("/createall", this.createAll);
   }
 
   private async getUsersProjects(req: Request, res: Response) {
@@ -25,6 +26,12 @@ export class UserProjectController {
   private async createUserProject(req: Request, res: Response) {
     const { body } = req;
     const userProjectCreated = await UserProjectRepository.newUserProject(body);
+    return res.status(201).json(userProjectCreated);
+  }
+
+  private async createAll(req: Request, res: Response) {
+    const { body } = req;
+    const userProjectCreated = await UserProjectRepository.createAll(body);
     return res.status(201).json(userProjectCreated);
   }
 
