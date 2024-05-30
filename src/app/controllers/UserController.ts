@@ -20,7 +20,20 @@ export class UserController {
   }
 
   private async getAllUsers(req: Request, res: Response) {
-    const user = await UserRepository.getUsers();
+    const pageNumber = parseInt(req.query.pageNumber as string) || 1;
+    const itemsPerPage = parseInt(req.query.itemsPerPage as string) || 10;
+    const orderBy = (req.query.orderBy as string) || "name";
+    const orderDirection =
+      (req.query.orderDirection as "ASC" | "DESC") || "ASC";
+
+    const options = {
+      pageNumber,
+      itemsPerPage,
+      orderBy,
+      orderDirection,
+    };
+
+    const user = await UserRepository.getUsers(options);
     res.status(200).json(user);
   }
 

@@ -3,6 +3,7 @@ import { UserProject } from "../entities/UserProject";
 import { AppDataSource } from "../../database/dataSource";
 import { ErrorExtension } from "../utils/ErrorExtension";
 import userProjectValidation from "../utils/validations/userProjectSchemaValidation";
+
 import {
   IUserProjectInput,
   IUserProjectOutput,
@@ -12,7 +13,9 @@ export class UserProjectRepository {
     AppDataSource.getRepository(UserProject);
 
   static async getUsersProjects(): Promise<IUserProjectOutput[]> {
-    return this.userProjectRepository.find();
+    return this.userProjectRepository.find({
+      relations: ["users", "projects"],
+    });
   }
 
   static async newUserProject(

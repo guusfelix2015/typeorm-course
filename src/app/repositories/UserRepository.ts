@@ -11,8 +11,25 @@ import { Auth } from "../utils/Auth";
 export class UserRepository {
   private static usersRepository = AppDataSource.getRepository(User);
 
-  static async getUsers(): Promise<IUserOutput[]> {
-    const users = await this.usersRepository.find({ relations: ["address"] });
+  static async getUsers({
+    pageNumber,
+    itemsPerPage,
+    orderBy,
+    orderDirection,
+  }: {
+    pageNumber: number;
+    itemsPerPage: number;
+    orderBy: string;
+    orderDirection: "ASC" | "DESC";
+  }): Promise<IUserOutput[]> {
+    const users = await this.usersRepository.find({
+      skip: (pageNumber - 1) * itemsPerPage,
+      take: itemsPerPage,
+      order: {
+        [orderBy]: orderDirection,
+      },
+      relations: ["address"],
+    });
 
     return users.map(({ password, ...user }) => user);
   }
