@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   OneToMany,
+  Index,
 } from "typeorm";
 import { Address } from "./Address";
 import { UserProject } from "./UserProject";
@@ -17,6 +18,7 @@ export class User {
   @Column("varchar", { nullable: false, length: 100 })
   name: string;
 
+  @Index("email-idx", { unique: true })
   @Column("varchar", { nullable: false, length: 100, unique: true })
   email: string;
 

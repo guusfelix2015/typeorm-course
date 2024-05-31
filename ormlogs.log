@@ -1,0 +1,771 @@
+[2024-05-30T20:40:08.908Z][QUERY]: SELECT VERSION() AS `version`
+[2024-05-30T20:40:08.918Z][QUERY]: START TRANSACTION
+[2024-05-30T20:40:08.919Z][QUERY]: SELECT DATABASE() AS `db_name`
+[2024-05-30T20:40:08.920Z][QUERY]: SELECT `TABLE_SCHEMA`, `TABLE_NAME`, `TABLE_COMMENT` FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_SCHEMA` = 'curso_typeorm' AND `TABLE_NAME` = 'address' UNION SELECT `TABLE_SCHEMA`, `TABLE_NAME`, `TABLE_COMMENT` FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_SCHEMA` = 'curso_typeorm' AND `TABLE_NAME` = 'projects' UNION SELECT `TABLE_SCHEMA`, `TABLE_NAME`, `TABLE_COMMENT` FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_SCHEMA` = 'curso_typeorm' AND `TABLE_NAME` = 'users_projects' UNION SELECT `TABLE_SCHEMA`, `TABLE_NAME`, `TABLE_COMMENT` FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_SCHEMA` = 'curso_typeorm' AND `TABLE_NAME` = 'users'
+[2024-05-30T20:40:08.924Z][QUERY]: 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'address'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'projects'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users_projects'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users'
+                
+[2024-05-30T20:40:08.924Z][QUERY]: SELECT * FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'address'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'users_projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'users'
+            ) `kcu` WHERE `CONSTRAINT_NAME` = 'PRIMARY'
+[2024-05-30T20:40:08.924Z][QUERY]: 
+            SELECT
+                `SCHEMA_NAME`,
+                `DEFAULT_CHARACTER_SET_NAME` as `CHARSET`,
+                `DEFAULT_COLLATION_NAME` AS `COLLATION`
+            FROM `INFORMATION_SCHEMA`.`SCHEMATA`
+            
+[2024-05-30T20:40:08.924Z][QUERY]: 
+            SELECT
+                `s`.*
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'address'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users_projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users'
+            ) `s`
+            LEFT JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'address'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users_projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users'
+            ) `rc`
+                ON
+                    `s`.`INDEX_NAME` = `rc`.`CONSTRAINT_NAME`
+                    AND
+                    `s`.`TABLE_SCHEMA` = `rc`.`CONSTRAINT_SCHEMA`
+            WHERE
+                `s`.`INDEX_NAME` != 'PRIMARY'
+                AND
+                `rc`.`CONSTRAINT_NAME` IS NULL
+            
+[2024-05-30T20:40:08.924Z][QUERY]: 
+            SELECT
+                `kcu`.`TABLE_SCHEMA`,
+                `kcu`.`TABLE_NAME`,
+                `kcu`.`CONSTRAINT_NAME`,
+                `kcu`.`COLUMN_NAME`,
+                `kcu`.`REFERENCED_TABLE_SCHEMA`,
+                `kcu`.`REFERENCED_TABLE_NAME`,
+                `kcu`.`REFERENCED_COLUMN_NAME`,
+                `rc`.`DELETE_RULE` `ON_DELETE`,
+                `rc`.`UPDATE_RULE` `ON_UPDATE`
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'address'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'users_projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'users'
+            ) `kcu`
+            INNER JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'address'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users_projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users'
+            ) `rc`
+                ON
+                    `rc`.`CONSTRAINT_SCHEMA` = `kcu`.`CONSTRAINT_SCHEMA`
+                    AND
+                    `rc`.`TABLE_NAME` = `kcu`.`TABLE_NAME`
+                    AND
+                    `rc`.`CONSTRAINT_NAME` = `kcu`.`CONSTRAINT_NAME`
+            
+[2024-05-30T20:40:08.944Z][QUERY]: SELECT VERSION() AS `version`
+[2024-05-30T20:40:08.947Z][QUERY]: SELECT * FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = 'curso_typeorm' AND `TABLE_NAME` = 'typeorm_metadata'
+[2024-05-30T20:40:08.951Z][QUERY]: COMMIT
+[2024-05-30T20:40:45.521Z][QUERY]: SELECT DISTINCT `distinctAlias`.`User_id` AS `ids_User_id`, `distinctAlias`.`User_name` FROM (SELECT `User`.`id` AS `User_id`, `User`.`name` AS `User_name`, `User`.`email` AS `User_email`, `User`.`password` AS `User_password`, `User`.`birth_date` AS `User_birth_date`, `User`.`active` AS `User_active`, `User`.`created_at` AS `User_created_at`, `User`.`updated_at` AS `User_updated_at`, `User__User_address`.`id` AS `User__User_address_id`, `User__User_address`.`street` AS `User__User_address_street`, `User__User_address`.`city` AS `User__User_address_city`, `User__User_address`.`state` AS `User__User_address_state`, `User__User_address`.`user_id` AS `User__User_address_user_id`, `User__User_address`.`created_at` AS `User__User_address_created_at`, `User__User_address`.`updated_at` AS `User__User_address_updated_at` FROM `users` `User` LEFT JOIN `address` `User__User_address` ON `User__User_address`.`user_id`=`User`.`id`) `distinctAlias` ORDER BY `distinctAlias`.`User_name` ASC, `User_id` ASC LIMIT 10 OFFSET 10
+[2024-05-31T00:47:12.009Z][QUERY]: SELECT VERSION() AS `version`
+[2024-05-31T00:47:12.019Z][QUERY]: START TRANSACTION
+[2024-05-31T00:47:12.020Z][QUERY]: SELECT DATABASE() AS `db_name`
+[2024-05-31T00:47:12.021Z][QUERY]: SELECT `TABLE_SCHEMA`, `TABLE_NAME`, `TABLE_COMMENT` FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_SCHEMA` = 'curso_typeorm' AND `TABLE_NAME` = 'address' UNION SELECT `TABLE_SCHEMA`, `TABLE_NAME`, `TABLE_COMMENT` FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_SCHEMA` = 'curso_typeorm' AND `TABLE_NAME` = 'projects' UNION SELECT `TABLE_SCHEMA`, `TABLE_NAME`, `TABLE_COMMENT` FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_SCHEMA` = 'curso_typeorm' AND `TABLE_NAME` = 'users_projects' UNION SELECT `TABLE_SCHEMA`, `TABLE_NAME`, `TABLE_COMMENT` FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_SCHEMA` = 'curso_typeorm' AND `TABLE_NAME` = 'users'
+[2024-05-31T00:47:12.024Z][QUERY]: 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'address'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'projects'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users_projects'
+                 UNION 
+                SELECT
+                    *
+                FROM
+                    `INFORMATION_SCHEMA`.`COLUMNS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users'
+                
+[2024-05-31T00:47:12.024Z][QUERY]: SELECT * FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'address'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'users_projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'users'
+            ) `kcu` WHERE `CONSTRAINT_NAME` = 'PRIMARY'
+[2024-05-31T00:47:12.024Z][QUERY]: 
+            SELECT
+                `SCHEMA_NAME`,
+                `DEFAULT_CHARACTER_SET_NAME` as `CHARSET`,
+                `DEFAULT_COLLATION_NAME` AS `COLLATION`
+            FROM `INFORMATION_SCHEMA`.`SCHEMATA`
+            
+[2024-05-31T00:47:12.024Z][QUERY]: 
+            SELECT
+                `s`.*
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'address'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users_projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`STATISTICS`
+                WHERE
+                    `TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users'
+            ) `s`
+            LEFT JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'address'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users_projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users'
+            ) `rc`
+                ON
+                    `s`.`INDEX_NAME` = `rc`.`CONSTRAINT_NAME`
+                    AND
+                    `s`.`TABLE_SCHEMA` = `rc`.`CONSTRAINT_SCHEMA`
+            WHERE
+                `s`.`INDEX_NAME` != 'PRIMARY'
+                AND
+                `rc`.`CONSTRAINT_NAME` IS NULL
+            
+[2024-05-31T00:47:12.024Z][QUERY]: 
+            SELECT
+                `kcu`.`TABLE_SCHEMA`,
+                `kcu`.`TABLE_NAME`,
+                `kcu`.`CONSTRAINT_NAME`,
+                `kcu`.`COLUMN_NAME`,
+                `kcu`.`REFERENCED_TABLE_SCHEMA`,
+                `kcu`.`REFERENCED_TABLE_NAME`,
+                `kcu`.`REFERENCED_COLUMN_NAME`,
+                `rc`.`DELETE_RULE` `ON_DELETE`,
+                `rc`.`UPDATE_RULE` `ON_UPDATE`
+            FROM (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'address'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'users_projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` `kcu`
+                WHERE
+                    `kcu`.`TABLE_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `kcu`.`TABLE_NAME` = 'users'
+            ) `kcu`
+            INNER JOIN (
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'address'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users_projects'
+             UNION 
+                SELECT
+                    *
+                FROM `INFORMATION_SCHEMA`.`REFERENTIAL_CONSTRAINTS`
+                WHERE
+                    `CONSTRAINT_SCHEMA` = 'curso_typeorm'
+                    AND
+                    `TABLE_NAME` = 'users'
+            ) `rc`
+                ON
+                    `rc`.`CONSTRAINT_SCHEMA` = `kcu`.`CONSTRAINT_SCHEMA`
+                    AND
+                    `rc`.`TABLE_NAME` = `kcu`.`TABLE_NAME`
+                    AND
+                    `rc`.`CONSTRAINT_NAME` = `kcu`.`CONSTRAINT_NAME`
+            
+[2024-05-31T00:47:12.036Z][QUERY]: SELECT VERSION() AS `version`
+[2024-05-31T00:47:12.039Z][QUERY]: SELECT * FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = 'curso_typeorm' AND `TABLE_NAME` = 'typeorm_metadata'
+[2024-05-31T00:47:12.044Z][QUERY]: COMMIT
+[2024-05-31T01:07:15.984Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:07:16.200Z][QUERY]: SELECT version();
+[2024-05-31T01:07:16.400Z][QUERY]: START TRANSACTION
+[2024-05-31T01:07:16.599Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:07:16.799Z][QUERY]: SELECT * FROM current_database()
+[2024-05-31T01:07:16.998Z][QUERY]: SELECT "table_schema", "table_name", obj_description(('"' || "table_schema" || '"."' || "table_name" || '"')::regclass, 'pg_class') AS table_comment FROM "information_schema"."tables" WHERE ("table_schema" = 'public' AND "table_name" = 'address') OR ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users')
+[2024-05-31T01:07:17.200Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'typeorm_metadata'
+[2024-05-31T01:07:17.404Z][QUERY]: CREATE TABLE "address" ("id" SERIAL NOT NULL, "street" character varying(100) NOT NULL, "city" character varying(100) NOT NULL, "state" character varying NOT NULL, "user_id" integer NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_d92de1f82754668b5f5f5dd4fd5" PRIMARY KEY ("id"))
+[2024-05-31T01:07:17.616Z][QUERY]: CREATE TABLE "projects" ("id" SERIAL NOT NULL, "name" character varying(100) NOT NULL, "description" character varying(255) NOT NULL, "start_at" date NOT NULL, "end_at" date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_2187088ab5ef2a918473cb99007" UNIQUE ("name"), CONSTRAINT "PK_6271df0a7aed1d6c0691ce6ac50" PRIMARY KEY ("id"))
+[2024-05-31T01:07:17.822Z][QUERY]: CREATE TABLE "users_projects" ("id" SERIAL NOT NULL, "hours_worked" integer NOT NULL, "user_id" integer NOT NULL, "project_id" integer NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_f3d2d1a584f1bbc6a91d7ea5773" PRIMARY KEY ("id"))
+[2024-05-31T01:07:18.025Z][QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" character varying(100) NOT NULL, "email" character varying(100) NOT NULL, "password" character varying NOT NULL, "birth_date" date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:07:18.234Z][QUERY]: CREATE UNIQUE INDEX "email-idx" ON "users" ("email") 
+[2024-05-31T01:07:18.439Z][QUERY]: ALTER TABLE "address" ADD CONSTRAINT "FK_35cd6c3fafec0bb5d072e24ea20" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:07:18.638Z][QUERY]: ALTER TABLE "users_projects" ADD CONSTRAINT "FK_0f280c70a3a6ab7f4cf3c658c4c" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:07:18.838Z][QUERY]: ALTER TABLE "users_projects" ADD CONSTRAINT "FK_741210c246defe00ed877a98f2a" FOREIGN KEY ("project_id") REFERENCES "projects"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:07:19.038Z][QUERY]: COMMIT
+[2024-05-31T01:07:23.871Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:07:24.086Z][QUERY]: SELECT version();
+[2024-05-31T01:07:24.286Z][QUERY]: START TRANSACTION
+[2024-05-31T01:07:24.486Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:07:24.685Z][QUERY]: SELECT * FROM current_database()
+[2024-05-31T01:07:24.884Z][QUERY]: SELECT "table_schema", "table_name", obj_description(('"' || "table_schema" || '"."' || "table_name" || '"')::regclass, 'pg_class') AS table_comment FROM "information_schema"."tables" WHERE ("table_schema" = 'public' AND "table_name" = 'address') OR ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users')
+[2024-05-31T01:07:25.092Z][QUERY]: SELECT TRUE FROM information_schema.columns WHERE table_name = 'pg_class' and column_name = 'relispartition'
+[2024-05-31T01:07:25.297Z][QUERY]: SELECT columns.*, pg_catalog.col_description(('"' || table_catalog || '"."' || table_schema || '"."' || table_name || '"')::regclass::oid, ordinal_position) AS description, ('"' || "udt_schema" || '"."' || "udt_name" || '"')::"regtype" AS "regtype", pg_catalog.format_type("col_attr"."atttypid", "col_attr"."atttypmod") AS "format_type" FROM "information_schema"."columns" LEFT JOIN "pg_catalog"."pg_attribute" AS "col_attr" ON "col_attr"."attname" = "columns"."column_name" AND "col_attr"."attrelid" = ( SELECT "cls"."oid" FROM "pg_catalog"."pg_class" AS "cls" LEFT JOIN "pg_catalog"."pg_namespace" AS "ns" ON "ns"."oid" = "cls"."relnamespace" WHERE "cls"."relname" = "columns"."table_name" AND "ns"."nspname" = "columns"."table_schema" ) WHERE ("table_schema" = 'public' AND "table_name" = 'address') OR ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users')
+[2024-05-31T01:07:25.297Z][QUERY]: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "cnst"."conname" AS "constraint_name", pg_get_constraintdef("cnst"."oid") AS "expression", CASE "cnst"."contype" WHEN 'p' THEN 'PRIMARY' WHEN 'u' THEN 'UNIQUE' WHEN 'c' THEN 'CHECK' WHEN 'x' THEN 'EXCLUDE' END AS "constraint_type", "a"."attname" AS "column_name" FROM "pg_constraint" "cnst" INNER JOIN "pg_class" "t" ON "t"."oid" = "cnst"."conrelid" INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "cnst"."connamespace" LEFT JOIN "pg_attribute" "a" ON "a"."attrelid" = "cnst"."conrelid" AND "a"."attnum" = ANY ("cnst"."conkey") WHERE "t"."relkind" IN ('r', 'p') AND (("ns"."nspname" = 'public' AND "t"."relname" = 'address') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users'))
+[2024-05-31T01:07:25.297Z][QUERY]: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "i"."relname" AS "constraint_name", "a"."attname" AS "column_name", CASE "ix"."indisunique" WHEN 't' THEN 'TRUE' ELSE'FALSE' END AS "is_unique", pg_get_expr("ix"."indpred", "ix"."indrelid") AS "condition", "types"."typname" AS "type_name", "am"."amname" AS "index_type" FROM "pg_class" "t" INNER JOIN "pg_index" "ix" ON "ix"."indrelid" = "t"."oid" INNER JOIN "pg_attribute" "a" ON "a"."attrelid" = "t"."oid"  AND "a"."attnum" = ANY ("ix"."indkey") INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "t"."relnamespace" INNER JOIN "pg_class" "i" ON "i"."oid" = "ix"."indexrelid" INNER JOIN "pg_type" "types" ON "types"."oid" = "a"."atttypid" INNER JOIN "pg_am" "am" ON "i"."relam" = "am"."oid" LEFT JOIN "pg_constraint" "cnst" ON "cnst"."conname" = "i"."relname" WHERE "t"."relkind" IN ('r', 'p') AND "cnst"."contype" IS NULL AND (("ns"."nspname" = 'public' AND "t"."relname" = 'address') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users'))
+[2024-05-31T01:07:25.297Z][QUERY]: SELECT "con"."conname" AS "constraint_name", "con"."nspname" AS "table_schema", "con"."relname" AS "table_name", "att2"."attname" AS "column_name", "ns"."nspname" AS "referenced_table_schema", "cl"."relname" AS "referenced_table_name", "att"."attname" AS "referenced_column_name", "con"."confdeltype" AS "on_delete", "con"."confupdtype" AS "on_update", "con"."condeferrable" AS "deferrable", "con"."condeferred" AS "deferred" FROM ( SELECT UNNEST ("con1"."conkey") AS "parent", UNNEST ("con1"."confkey") AS "child", "con1"."confrelid", "con1"."conrelid", "con1"."conname", "con1"."contype", "ns"."nspname", "cl"."relname", "con1"."condeferrable", CASE WHEN "con1"."condeferred" THEN 'INITIALLY DEFERRED' ELSE 'INITIALLY IMMEDIATE' END as condeferred, CASE "con1"."confdeltype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confdeltype", CASE "con1"."confupdtype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confupdtype" FROM "pg_class" "cl" INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_constraint" "con1" ON "con1"."conrelid" = "cl"."oid" WHERE "con1"."contype" = 'f' AND (("ns"."nspname" = 'public' AND "cl"."relname" = 'address') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'users')) ) "con" INNER JOIN "pg_attribute" "att" ON "att"."attrelid" = "con"."confrelid" AND "att"."attnum" = "con"."child" INNER JOIN "pg_class" "cl" ON "cl"."oid" = "con"."confrelid"  AND "cl"."relispartition" = 'f'INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_attribute" "att2" ON "att2"."attrelid" = "con"."conrelid" AND "att2"."attnum" = "con"."parent"
+[2024-05-31T01:07:26.192Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'typeorm_metadata'
+[2024-05-31T01:07:26.405Z][QUERY]: COMMIT
+[2024-05-31T01:10:04.212Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:10:04.422Z][QUERY]: SELECT version();
+[2024-05-31T01:10:04.622Z][QUERY]: START TRANSACTION
+[2024-05-31T01:10:04.823Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:10:05.023Z][QUERY]: SELECT * FROM current_database()
+[2024-05-31T01:10:05.223Z][QUERY]: SELECT "table_schema", "table_name", obj_description(('"' || "table_schema" || '"."' || "table_name" || '"')::regclass, 'pg_class') AS table_comment FROM "information_schema"."tables" WHERE ("table_schema" = 'public' AND "table_name" = 'address') OR ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users')
+[2024-05-31T01:10:05.427Z][QUERY]: SELECT TRUE FROM information_schema.columns WHERE table_name = 'pg_class' and column_name = 'relispartition'
+[2024-05-31T01:10:05.682Z][QUERY]: SELECT columns.*, pg_catalog.col_description(('"' || table_catalog || '"."' || table_schema || '"."' || table_name || '"')::regclass::oid, ordinal_position) AS description, ('"' || "udt_schema" || '"."' || "udt_name" || '"')::"regtype" AS "regtype", pg_catalog.format_type("col_attr"."atttypid", "col_attr"."atttypmod") AS "format_type" FROM "information_schema"."columns" LEFT JOIN "pg_catalog"."pg_attribute" AS "col_attr" ON "col_attr"."attname" = "columns"."column_name" AND "col_attr"."attrelid" = ( SELECT "cls"."oid" FROM "pg_catalog"."pg_class" AS "cls" LEFT JOIN "pg_catalog"."pg_namespace" AS "ns" ON "ns"."oid" = "cls"."relnamespace" WHERE "cls"."relname" = "columns"."table_name" AND "ns"."nspname" = "columns"."table_schema" ) WHERE ("table_schema" = 'public' AND "table_name" = 'address') OR ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users')
+[2024-05-31T01:10:05.682Z][QUERY]: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "cnst"."conname" AS "constraint_name", pg_get_constraintdef("cnst"."oid") AS "expression", CASE "cnst"."contype" WHEN 'p' THEN 'PRIMARY' WHEN 'u' THEN 'UNIQUE' WHEN 'c' THEN 'CHECK' WHEN 'x' THEN 'EXCLUDE' END AS "constraint_type", "a"."attname" AS "column_name" FROM "pg_constraint" "cnst" INNER JOIN "pg_class" "t" ON "t"."oid" = "cnst"."conrelid" INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "cnst"."connamespace" LEFT JOIN "pg_attribute" "a" ON "a"."attrelid" = "cnst"."conrelid" AND "a"."attnum" = ANY ("cnst"."conkey") WHERE "t"."relkind" IN ('r', 'p') AND (("ns"."nspname" = 'public' AND "t"."relname" = 'address') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users'))
+[2024-05-31T01:10:05.682Z][QUERY]: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "i"."relname" AS "constraint_name", "a"."attname" AS "column_name", CASE "ix"."indisunique" WHEN 't' THEN 'TRUE' ELSE'FALSE' END AS "is_unique", pg_get_expr("ix"."indpred", "ix"."indrelid") AS "condition", "types"."typname" AS "type_name", "am"."amname" AS "index_type" FROM "pg_class" "t" INNER JOIN "pg_index" "ix" ON "ix"."indrelid" = "t"."oid" INNER JOIN "pg_attribute" "a" ON "a"."attrelid" = "t"."oid"  AND "a"."attnum" = ANY ("ix"."indkey") INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "t"."relnamespace" INNER JOIN "pg_class" "i" ON "i"."oid" = "ix"."indexrelid" INNER JOIN "pg_type" "types" ON "types"."oid" = "a"."atttypid" INNER JOIN "pg_am" "am" ON "i"."relam" = "am"."oid" LEFT JOIN "pg_constraint" "cnst" ON "cnst"."conname" = "i"."relname" WHERE "t"."relkind" IN ('r', 'p') AND "cnst"."contype" IS NULL AND (("ns"."nspname" = 'public' AND "t"."relname" = 'address') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users'))
+[2024-05-31T01:10:05.683Z][QUERY]: SELECT "con"."conname" AS "constraint_name", "con"."nspname" AS "table_schema", "con"."relname" AS "table_name", "att2"."attname" AS "column_name", "ns"."nspname" AS "referenced_table_schema", "cl"."relname" AS "referenced_table_name", "att"."attname" AS "referenced_column_name", "con"."confdeltype" AS "on_delete", "con"."confupdtype" AS "on_update", "con"."condeferrable" AS "deferrable", "con"."condeferred" AS "deferred" FROM ( SELECT UNNEST ("con1"."conkey") AS "parent", UNNEST ("con1"."confkey") AS "child", "con1"."confrelid", "con1"."conrelid", "con1"."conname", "con1"."contype", "ns"."nspname", "cl"."relname", "con1"."condeferrable", CASE WHEN "con1"."condeferred" THEN 'INITIALLY DEFERRED' ELSE 'INITIALLY IMMEDIATE' END as condeferred, CASE "con1"."confdeltype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confdeltype", CASE "con1"."confupdtype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confupdtype" FROM "pg_class" "cl" INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_constraint" "con1" ON "con1"."conrelid" = "cl"."oid" WHERE "con1"."contype" = 'f' AND (("ns"."nspname" = 'public' AND "cl"."relname" = 'address') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'users')) ) "con" INNER JOIN "pg_attribute" "att" ON "att"."attrelid" = "con"."confrelid" AND "att"."attnum" = "con"."child" INNER JOIN "pg_class" "cl" ON "cl"."oid" = "con"."confrelid"  AND "cl"."relispartition" = 'f'INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_attribute" "att2" ON "att2"."attrelid" = "con"."conrelid" AND "att2"."attnum" = "con"."parent"
+[2024-05-31T01:10:06.603Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'typeorm_metadata'
+[2024-05-31T01:10:06.821Z][QUERY]: COMMIT
+[2024-05-31T01:10:10.686Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:10:10.895Z][QUERY]: SELECT version();
+[2024-05-31T01:10:11.102Z][QUERY]: START TRANSACTION
+[2024-05-31T01:10:11.304Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:10:11.505Z][QUERY]: SELECT * FROM current_database()
+[2024-05-31T01:10:11.706Z][QUERY]: SELECT "table_schema", "table_name", obj_description(('"' || "table_schema" || '"."' || "table_name" || '"')::regclass, 'pg_class') AS table_comment FROM "information_schema"."tables" WHERE ("table_schema" = 'public' AND "table_name" = 'address') OR ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users')
+[2024-05-31T01:10:11.910Z][QUERY]: SELECT TRUE FROM information_schema.columns WHERE table_name = 'pg_class' and column_name = 'relispartition'
+[2024-05-31T01:10:12.115Z][QUERY]: SELECT columns.*, pg_catalog.col_description(('"' || table_catalog || '"."' || table_schema || '"."' || table_name || '"')::regclass::oid, ordinal_position) AS description, ('"' || "udt_schema" || '"."' || "udt_name" || '"')::"regtype" AS "regtype", pg_catalog.format_type("col_attr"."atttypid", "col_attr"."atttypmod") AS "format_type" FROM "information_schema"."columns" LEFT JOIN "pg_catalog"."pg_attribute" AS "col_attr" ON "col_attr"."attname" = "columns"."column_name" AND "col_attr"."attrelid" = ( SELECT "cls"."oid" FROM "pg_catalog"."pg_class" AS "cls" LEFT JOIN "pg_catalog"."pg_namespace" AS "ns" ON "ns"."oid" = "cls"."relnamespace" WHERE "cls"."relname" = "columns"."table_name" AND "ns"."nspname" = "columns"."table_schema" ) WHERE ("table_schema" = 'public' AND "table_name" = 'address') OR ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users')
+[2024-05-31T01:10:12.115Z][QUERY]: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "cnst"."conname" AS "constraint_name", pg_get_constraintdef("cnst"."oid") AS "expression", CASE "cnst"."contype" WHEN 'p' THEN 'PRIMARY' WHEN 'u' THEN 'UNIQUE' WHEN 'c' THEN 'CHECK' WHEN 'x' THEN 'EXCLUDE' END AS "constraint_type", "a"."attname" AS "column_name" FROM "pg_constraint" "cnst" INNER JOIN "pg_class" "t" ON "t"."oid" = "cnst"."conrelid" INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "cnst"."connamespace" LEFT JOIN "pg_attribute" "a" ON "a"."attrelid" = "cnst"."conrelid" AND "a"."attnum" = ANY ("cnst"."conkey") WHERE "t"."relkind" IN ('r', 'p') AND (("ns"."nspname" = 'public' AND "t"."relname" = 'address') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users'))
+[2024-05-31T01:10:12.115Z][QUERY]: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "i"."relname" AS "constraint_name", "a"."attname" AS "column_name", CASE "ix"."indisunique" WHEN 't' THEN 'TRUE' ELSE'FALSE' END AS "is_unique", pg_get_expr("ix"."indpred", "ix"."indrelid") AS "condition", "types"."typname" AS "type_name", "am"."amname" AS "index_type" FROM "pg_class" "t" INNER JOIN "pg_index" "ix" ON "ix"."indrelid" = "t"."oid" INNER JOIN "pg_attribute" "a" ON "a"."attrelid" = "t"."oid"  AND "a"."attnum" = ANY ("ix"."indkey") INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "t"."relnamespace" INNER JOIN "pg_class" "i" ON "i"."oid" = "ix"."indexrelid" INNER JOIN "pg_type" "types" ON "types"."oid" = "a"."atttypid" INNER JOIN "pg_am" "am" ON "i"."relam" = "am"."oid" LEFT JOIN "pg_constraint" "cnst" ON "cnst"."conname" = "i"."relname" WHERE "t"."relkind" IN ('r', 'p') AND "cnst"."contype" IS NULL AND (("ns"."nspname" = 'public' AND "t"."relname" = 'address') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users'))
+[2024-05-31T01:10:12.116Z][QUERY]: SELECT "con"."conname" AS "constraint_name", "con"."nspname" AS "table_schema", "con"."relname" AS "table_name", "att2"."attname" AS "column_name", "ns"."nspname" AS "referenced_table_schema", "cl"."relname" AS "referenced_table_name", "att"."attname" AS "referenced_column_name", "con"."confdeltype" AS "on_delete", "con"."confupdtype" AS "on_update", "con"."condeferrable" AS "deferrable", "con"."condeferred" AS "deferred" FROM ( SELECT UNNEST ("con1"."conkey") AS "parent", UNNEST ("con1"."confkey") AS "child", "con1"."confrelid", "con1"."conrelid", "con1"."conname", "con1"."contype", "ns"."nspname", "cl"."relname", "con1"."condeferrable", CASE WHEN "con1"."condeferred" THEN 'INITIALLY DEFERRED' ELSE 'INITIALLY IMMEDIATE' END as condeferred, CASE "con1"."confdeltype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confdeltype", CASE "con1"."confupdtype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confupdtype" FROM "pg_class" "cl" INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_constraint" "con1" ON "con1"."conrelid" = "cl"."oid" WHERE "con1"."contype" = 'f' AND (("ns"."nspname" = 'public' AND "cl"."relname" = 'address') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'users')) ) "con" INNER JOIN "pg_attribute" "att" ON "att"."attrelid" = "con"."confrelid" AND "att"."attnum" = "con"."child" INNER JOIN "pg_class" "cl" ON "cl"."oid" = "con"."confrelid"  AND "cl"."relispartition" = 'f'INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_attribute" "att2" ON "att2"."attrelid" = "con"."conrelid" AND "att2"."attnum" = "con"."parent"
+[2024-05-31T01:10:12.939Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'typeorm_metadata'
+[2024-05-31T01:10:13.143Z][QUERY]: COMMIT
+[2024-05-31T01:19:52.976Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:19:53.193Z][QUERY]: SELECT version();
+[2024-05-31T01:19:53.427Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'migrations'
+[2024-05-31T01:19:53.631Z][QUERY]: CREATE TABLE "migrations" ("id" SERIAL NOT NULL, "timestamp" bigint NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_8c82d7f526340ab734260ea46be" PRIMARY KEY ("id"))
+[2024-05-31T01:19:53.845Z][QUERY]: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+[2024-05-31T01:19:54.045Z]0 migrations are already loaded in the database.
+[2024-05-31T01:19:54.045Z]5 migrations were found in the source code.
+[2024-05-31T01:19:54.046Z]5 migrations are new migrations must be executed.
+[2024-05-31T01:19:54.046Z][QUERY]: START TRANSACTION
+[2024-05-31T01:19:54.246Z][QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" varchar(100) NOT NULL, "email" varchar(100) NOT NULL, "password" varchar NOT NULL, "birth_date" Date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:19:54.447Z][FAILED QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" varchar(100) NOT NULL, "email" varchar(100) NOT NULL, "password" varchar NOT NULL, "birth_date" Date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:19:54.447Z][QUERY ERROR]: error: relation "users" already exists
+[2024-05-31T01:19:54.466Z]Migration "CreateUsersTable1716046496279" failed, error: relation "users" already exists
+[2024-05-31T01:19:54.466Z][QUERY]: ROLLBACK
+[2024-05-31T01:21:19.905Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:21:20.119Z][QUERY]: SELECT version();
+[2024-05-31T01:21:20.319Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'migrations'
+[2024-05-31T01:21:20.522Z][QUERY]: CREATE TABLE "migrations" ("id" SERIAL NOT NULL, "timestamp" bigint NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_8c82d7f526340ab734260ea46be" PRIMARY KEY ("id"))
+[2024-05-31T01:21:20.737Z][QUERY]: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+[2024-05-31T01:21:20.946Z]0 migrations are already loaded in the database.
+[2024-05-31T01:21:20.946Z]5 migrations were found in the source code.
+[2024-05-31T01:21:20.946Z]5 migrations are new migrations must be executed.
+[2024-05-31T01:21:20.946Z][QUERY]: START TRANSACTION
+[2024-05-31T01:21:21.150Z][QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" varchar(100) NOT NULL, "email" varchar(100) NOT NULL, "password" varchar NOT NULL, "birth_date" Date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:21:21.362Z][QUERY]: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1716046496279,"CreateUsersTable1716046496279"]
+[2024-05-31T01:21:21.628Z]Migration CreateUsersTable1716046496279 has been  executed successfully.
+[2024-05-31T01:21:22.696Z][QUERY]: START TRANSACTION
+[2024-05-31T01:21:22.898Z][QUERY]: INSERT INTO "users"("name", "email", "password", "birth_date", "active", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, DEFAULT, DEFAULT) RETURNING "id", "active", "created_at", "updated_at" -- PARAMETERS: ["admin","admin@admin.com","admin","1989-12-31",true]
+[2024-05-31T01:21:23.096Z][FAILED QUERY]: INSERT INTO "users"("name", "email", "password", "birth_date", "active", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, DEFAULT, DEFAULT) RETURNING "id", "active", "created_at", "updated_at" -- PARAMETERS: ["admin","admin@admin.com","admin","1989-12-31",true]
+[2024-05-31T01:21:23.096Z][QUERY ERROR]: error: relation "users" does not exist
+[2024-05-31T01:21:23.114Z][QUERY]: ROLLBACK
+[2024-05-31T01:21:23.313Z]Migration "CreateSeedUsersTable1716052161507" failed, error: relation "users" does not exist
+[2024-05-31T01:21:23.313Z][QUERY]: ROLLBACK
+[2024-05-31T01:21:47.555Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:21:47.771Z][QUERY]: SELECT version();
+[2024-05-31T01:21:47.973Z][QUERY]: START TRANSACTION
+[2024-05-31T01:21:48.175Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:21:48.376Z][QUERY]: SELECT * FROM current_database()
+[2024-05-31T01:21:48.578Z][QUERY]: SELECT "table_schema", "table_name", obj_description(('"' || "table_schema" || '"."' || "table_name" || '"')::regclass, 'pg_class') AS table_comment FROM "information_schema"."tables" WHERE ("table_schema" = 'public' AND "table_name" = 'address') OR ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users')
+[2024-05-31T01:21:48.781Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'typeorm_metadata'
+[2024-05-31T01:21:48.986Z][QUERY]: CREATE TABLE "address" ("id" SERIAL NOT NULL, "street" character varying(100) NOT NULL, "city" character varying(100) NOT NULL, "state" character varying NOT NULL, "user_id" integer NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_d92de1f82754668b5f5f5dd4fd5" PRIMARY KEY ("id"))
+[2024-05-31T01:21:49.197Z][QUERY]: CREATE TABLE "projects" ("id" SERIAL NOT NULL, "name" character varying(100) NOT NULL, "description" character varying(255) NOT NULL, "start_at" date NOT NULL, "end_at" date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_2187088ab5ef2a918473cb99007" UNIQUE ("name"), CONSTRAINT "PK_6271df0a7aed1d6c0691ce6ac50" PRIMARY KEY ("id"))
+[2024-05-31T01:21:49.405Z][QUERY]: CREATE TABLE "users_projects" ("id" SERIAL NOT NULL, "hours_worked" integer NOT NULL, "user_id" integer NOT NULL, "project_id" integer NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_f3d2d1a584f1bbc6a91d7ea5773" PRIMARY KEY ("id"))
+[2024-05-31T01:21:49.610Z][QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" character varying(100) NOT NULL, "email" character varying(100) NOT NULL, "password" character varying NOT NULL, "birth_date" date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:21:49.822Z][QUERY]: CREATE UNIQUE INDEX "email-idx" ON "users" ("email") 
+[2024-05-31T01:21:50.028Z][QUERY]: ALTER TABLE "address" ADD CONSTRAINT "FK_35cd6c3fafec0bb5d072e24ea20" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:21:50.230Z][QUERY]: ALTER TABLE "users_projects" ADD CONSTRAINT "FK_0f280c70a3a6ab7f4cf3c658c4c" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:21:50.432Z][QUERY]: ALTER TABLE "users_projects" ADD CONSTRAINT "FK_741210c246defe00ed877a98f2a" FOREIGN KEY ("project_id") REFERENCES "projects"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:21:50.634Z][QUERY]: COMMIT
+[2024-05-31T01:21:53.672Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:21:53.885Z][QUERY]: SELECT version();
+[2024-05-31T01:21:54.084Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'migrations'
+[2024-05-31T01:21:54.286Z][QUERY]: CREATE TABLE "migrations" ("id" SERIAL NOT NULL, "timestamp" bigint NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_8c82d7f526340ab734260ea46be" PRIMARY KEY ("id"))
+[2024-05-31T01:21:54.497Z][QUERY]: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+[2024-05-31T01:21:54.696Z]0 migrations are already loaded in the database.
+[2024-05-31T01:21:54.696Z]4 migrations were found in the source code.
+[2024-05-31T01:21:54.696Z]4 migrations are new migrations must be executed.
+[2024-05-31T01:21:54.697Z][QUERY]: START TRANSACTION
+[2024-05-31T01:21:54.895Z][QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" varchar(100) NOT NULL, "email" varchar(100) NOT NULL, "password" varchar NOT NULL, "birth_date" Date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:21:55.096Z][FAILED QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" varchar(100) NOT NULL, "email" varchar(100) NOT NULL, "password" varchar NOT NULL, "birth_date" Date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:21:55.096Z][QUERY ERROR]: error: relation "users" already exists
+[2024-05-31T01:21:55.112Z]Migration "CreateUsersTable1716046496279" failed, error: relation "users" already exists
+[2024-05-31T01:21:55.113Z][QUERY]: ROLLBACK
+[2024-05-31T01:23:07.711Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:23:07.935Z][QUERY]: SELECT version();
+[2024-05-31T01:23:09.823Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:23:10.216Z][QUERY]: SELECT version();
+[2024-05-31T01:23:10.419Z][QUERY]: START TRANSACTION
+[2024-05-31T01:23:10.781Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:23:11.060Z][QUERY]: SELECT * FROM current_database()
+[2024-05-31T01:23:11.271Z][QUERY]: SELECT "table_schema", "table_name", obj_description(('"' || "table_schema" || '"."' || "table_name" || '"')::regclass, 'pg_class') AS table_comment FROM "information_schema"."tables" WHERE ("table_schema" = 'public' AND "table_name" = 'address') OR ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users')
+[2024-05-31T01:23:11.497Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'typeorm_metadata'
+[2024-05-31T01:23:11.757Z][QUERY]: CREATE TABLE "address" ("id" SERIAL NOT NULL, "street" character varying(100) NOT NULL, "city" character varying(100) NOT NULL, "state" character varying NOT NULL, "user_id" integer NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_d92de1f82754668b5f5f5dd4fd5" PRIMARY KEY ("id"))
+[2024-05-31T01:23:12.096Z][QUERY]: CREATE TABLE "projects" ("id" SERIAL NOT NULL, "name" character varying(100) NOT NULL, "description" character varying(255) NOT NULL, "start_at" date NOT NULL, "end_at" date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_2187088ab5ef2a918473cb99007" UNIQUE ("name"), CONSTRAINT "PK_6271df0a7aed1d6c0691ce6ac50" PRIMARY KEY ("id"))
+[2024-05-31T01:23:12.414Z][QUERY]: CREATE TABLE "users_projects" ("id" SERIAL NOT NULL, "hours_worked" integer NOT NULL, "user_id" integer NOT NULL, "project_id" integer NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_f3d2d1a584f1bbc6a91d7ea5773" PRIMARY KEY ("id"))
+[2024-05-31T01:23:12.722Z][QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" character varying(100) NOT NULL, "email" character varying(100) NOT NULL, "password" character varying NOT NULL, "birth_date" date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:23:12.962Z][QUERY]: CREATE UNIQUE INDEX "email-idx" ON "users" ("email") 
+[2024-05-31T01:23:13.324Z][QUERY]: ALTER TABLE "address" ADD CONSTRAINT "FK_35cd6c3fafec0bb5d072e24ea20" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:23:13.572Z][QUERY]: ALTER TABLE "users_projects" ADD CONSTRAINT "FK_0f280c70a3a6ab7f4cf3c658c4c" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:23:13.834Z][QUERY]: ALTER TABLE "users_projects" ADD CONSTRAINT "FK_741210c246defe00ed877a98f2a" FOREIGN KEY ("project_id") REFERENCES "projects"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:23:14.036Z][QUERY]: COMMIT
+[2024-05-31T01:23:31.627Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:23:31.836Z][QUERY]: SELECT version();
+[2024-05-31T01:23:32.035Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'migrations'
+[2024-05-31T01:23:32.308Z][QUERY]: CREATE TABLE "migrations" ("id" SERIAL NOT NULL, "timestamp" bigint NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_8c82d7f526340ab734260ea46be" PRIMARY KEY ("id"))
+[2024-05-31T01:23:32.526Z][QUERY]: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+[2024-05-31T01:23:32.728Z]0 migrations are already loaded in the database.
+[2024-05-31T01:23:32.728Z]4 migrations were found in the source code.
+[2024-05-31T01:23:32.728Z]4 migrations are new migrations must be executed.
+[2024-05-31T01:23:32.728Z][QUERY]: START TRANSACTION
+[2024-05-31T01:23:32.926Z][QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" varchar(100) NOT NULL, "email" varchar(100) NOT NULL, "password" varchar NOT NULL, "birth_date" Date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:23:33.133Z][FAILED QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" varchar(100) NOT NULL, "email" varchar(100) NOT NULL, "password" varchar NOT NULL, "birth_date" Date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:23:33.133Z][QUERY ERROR]: error: relation "users" already exists
+[2024-05-31T01:23:33.143Z]Migration "CreateUsersTable1716046496279" failed, error: relation "users" already exists
+[2024-05-31T01:23:33.143Z][QUERY]: ROLLBACK
+[2024-05-31T01:26:05.447Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:26:05.695Z][QUERY]: SELECT version();
+[2024-05-31T01:26:05.894Z][QUERY]: START TRANSACTION
+[2024-05-31T01:26:06.093Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:26:06.292Z][QUERY]: SELECT * FROM current_database()
+[2024-05-31T01:26:06.490Z][QUERY]: SELECT "table_schema", "table_name", obj_description(('"' || "table_schema" || '"."' || "table_name" || '"')::regclass, 'pg_class') AS table_comment FROM "information_schema"."tables" WHERE ("table_schema" = 'public' AND "table_name" = 'address') OR ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users')
+[2024-05-31T01:26:06.692Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'typeorm_metadata'
+[2024-05-31T01:26:06.892Z][QUERY]: CREATE TABLE "address" ("id" SERIAL NOT NULL, "street" character varying(100) NOT NULL, "city" character varying(100) NOT NULL, "state" character varying NOT NULL, "user_id" integer NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_d92de1f82754668b5f5f5dd4fd5" PRIMARY KEY ("id"))
+[2024-05-31T01:26:07.102Z][QUERY]: CREATE TABLE "projects" ("id" SERIAL NOT NULL, "name" character varying(100) NOT NULL, "description" character varying(255) NOT NULL, "start_at" date NOT NULL, "end_at" date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_2187088ab5ef2a918473cb99007" UNIQUE ("name"), CONSTRAINT "PK_6271df0a7aed1d6c0691ce6ac50" PRIMARY KEY ("id"))
+[2024-05-31T01:26:07.323Z][QUERY]: CREATE TABLE "users_projects" ("id" SERIAL NOT NULL, "hours_worked" integer NOT NULL, "user_id" integer NOT NULL, "project_id" integer NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_f3d2d1a584f1bbc6a91d7ea5773" PRIMARY KEY ("id"))
+[2024-05-31T01:26:07.531Z][QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" character varying(100) NOT NULL, "email" character varying(100) NOT NULL, "password" character varying NOT NULL, "birth_date" date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:26:07.743Z][QUERY]: CREATE UNIQUE INDEX "email-idx" ON "users" ("email") 
+[2024-05-31T01:26:07.947Z][QUERY]: ALTER TABLE "address" ADD CONSTRAINT "FK_35cd6c3fafec0bb5d072e24ea20" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:26:08.146Z][QUERY]: ALTER TABLE "users_projects" ADD CONSTRAINT "FK_0f280c70a3a6ab7f4cf3c658c4c" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:26:08.345Z][QUERY]: ALTER TABLE "users_projects" ADD CONSTRAINT "FK_741210c246defe00ed877a98f2a" FOREIGN KEY ("project_id") REFERENCES "projects"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:26:08.551Z][QUERY]: COMMIT
+[2024-05-31T01:27:08.138Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:27:08.352Z][QUERY]: SELECT version();
+[2024-05-31T01:27:08.551Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'migrations'
+[2024-05-31T01:27:08.753Z][QUERY]: CREATE TABLE "migrations" ("id" SERIAL NOT NULL, "timestamp" bigint NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_8c82d7f526340ab734260ea46be" PRIMARY KEY ("id"))
+[2024-05-31T01:27:08.993Z][QUERY]: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+[2024-05-31T01:27:09.192Z]0 migrations are already loaded in the database.
+[2024-05-31T01:27:09.192Z]4 migrations were found in the source code.
+[2024-05-31T01:27:09.192Z]4 migrations are new migrations must be executed.
+[2024-05-31T01:27:09.192Z][QUERY]: START TRANSACTION
+[2024-05-31T01:27:09.391Z][QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" varchar(100) NOT NULL, "email" varchar(100) NOT NULL, "password" varchar NOT NULL, "birth_date" Date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:27:09.602Z][QUERY]: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1716046496279,"CreateUsersTable1716046496279"]
+[2024-05-31T01:27:09.802Z]Migration CreateUsersTable1716046496279 has been  executed successfully.
+[2024-05-31T01:27:09.802Z][QUERY]: CREATE TABLE "address" ("id" SERIAL NOT NULL, "street" varchar(100) NOT NULL, "city" varchar(100) NOT NULL, "state" varchar(2) NOT NULL, "user_id" int NOT NULL, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "PK_d92de1f82754668b5f5f5dd4fd5" PRIMARY KEY ("id"))
+[2024-05-31T01:27:10.002Z][FAILED QUERY]: CREATE TABLE "address" ("id" SERIAL NOT NULL, "street" varchar(100) NOT NULL, "city" varchar(100) NOT NULL, "state" varchar(2) NOT NULL, "user_id" int NOT NULL, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "PK_d92de1f82754668b5f5f5dd4fd5" PRIMARY KEY ("id"))
+[2024-05-31T01:27:10.002Z][QUERY ERROR]: error: relation "address" already exists
+[2024-05-31T01:27:10.020Z]Migration "CreateAddressTable1716322566903" failed, error: relation "address" already exists
+[2024-05-31T01:27:10.020Z][QUERY]: ROLLBACK
+[2024-05-31T01:28:17.325Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:28:17.677Z][QUERY]: SELECT version();
+[2024-05-31T01:28:17.883Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'migrations'
+[2024-05-31T01:28:18.110Z][QUERY]: CREATE TABLE "migrations" ("id" SERIAL NOT NULL, "timestamp" bigint NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_8c82d7f526340ab734260ea46be" PRIMARY KEY ("id"))
+[2024-05-31T01:28:18.328Z][QUERY]: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+[2024-05-31T01:28:18.536Z]0 migrations are already loaded in the database.
+[2024-05-31T01:28:18.536Z]4 migrations were found in the source code.
+[2024-05-31T01:28:18.536Z]4 migrations are new migrations must be executed.
+[2024-05-31T01:28:18.536Z][QUERY]: START TRANSACTION
+[2024-05-31T01:28:18.761Z][QUERY]: CREATE TABLE "users" ("id" SERIAL NOT NULL, "name" varchar(100) NOT NULL, "email" varchar(100) NOT NULL, "password" varchar NOT NULL, "birth_date" Date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))
+[2024-05-31T01:28:19.040Z][QUERY]: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1716046496279,"CreateUsersTable1716046496279"]
+[2024-05-31T01:28:19.246Z]Migration CreateUsersTable1716046496279 has been  executed successfully.
+[2024-05-31T01:28:19.247Z][QUERY]: CREATE TABLE "address" ("id" SERIAL NOT NULL, "street" varchar(100) NOT NULL, "city" varchar(100) NOT NULL, "state" varchar(2) NOT NULL, "user_id" int NOT NULL, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "PK_d92de1f82754668b5f5f5dd4fd5" PRIMARY KEY ("id"))
+[2024-05-31T01:28:19.456Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:28:19.656Z][QUERY]: SELECT * FROM current_database()
+[2024-05-31T01:28:19.903Z][QUERY]: SELECT "table_schema", "table_name", obj_description(('"' || "table_schema" || '"."' || "table_name" || '"')::regclass, 'pg_class') AS table_comment FROM "information_schema"."tables" WHERE ("table_schema" = 'public' AND "table_name" = 'address')
+[2024-05-31T01:28:20.130Z][QUERY]: SELECT TRUE FROM information_schema.columns WHERE table_name = 'pg_class' and column_name = 'relispartition'
+[2024-05-31T01:28:20.336Z][QUERY]: SELECT columns.*, pg_catalog.col_description(('"' || table_catalog || '"."' || table_schema || '"."' || table_name || '"')::regclass::oid, ordinal_position) AS description, ('"' || "udt_schema" || '"."' || "udt_name" || '"')::"regtype" AS "regtype", pg_catalog.format_type("col_attr"."atttypid", "col_attr"."atttypmod") AS "format_type" FROM "information_schema"."columns" LEFT JOIN "pg_catalog"."pg_attribute" AS "col_attr" ON "col_attr"."attname" = "columns"."column_name" AND "col_attr"."attrelid" = ( SELECT "cls"."oid" FROM "pg_catalog"."pg_class" AS "cls" LEFT JOIN "pg_catalog"."pg_namespace" AS "ns" ON "ns"."oid" = "cls"."relnamespace" WHERE "cls"."relname" = "columns"."table_name" AND "ns"."nspname" = "columns"."table_schema" ) WHERE ("table_schema" = 'public' AND "table_name" = 'address')
+[2024-05-31T01:28:20.337Z][QUERY]: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "cnst"."conname" AS "constraint_name", pg_get_constraintdef("cnst"."oid") AS "expression", CASE "cnst"."contype" WHEN 'p' THEN 'PRIMARY' WHEN 'u' THEN 'UNIQUE' WHEN 'c' THEN 'CHECK' WHEN 'x' THEN 'EXCLUDE' END AS "constraint_type", "a"."attname" AS "column_name" FROM "pg_constraint" "cnst" INNER JOIN "pg_class" "t" ON "t"."oid" = "cnst"."conrelid" INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "cnst"."connamespace" LEFT JOIN "pg_attribute" "a" ON "a"."attrelid" = "cnst"."conrelid" AND "a"."attnum" = ANY ("cnst"."conkey") WHERE "t"."relkind" IN ('r', 'p') AND (("ns"."nspname" = 'public' AND "t"."relname" = 'address'))
+[2024-05-31T01:28:20.337Z][QUERY]: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "i"."relname" AS "constraint_name", "a"."attname" AS "column_name", CASE "ix"."indisunique" WHEN 't' THEN 'TRUE' ELSE'FALSE' END AS "is_unique", pg_get_expr("ix"."indpred", "ix"."indrelid") AS "condition", "types"."typname" AS "type_name", "am"."amname" AS "index_type" FROM "pg_class" "t" INNER JOIN "pg_index" "ix" ON "ix"."indrelid" = "t"."oid" INNER JOIN "pg_attribute" "a" ON "a"."attrelid" = "t"."oid"  AND "a"."attnum" = ANY ("ix"."indkey") INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "t"."relnamespace" INNER JOIN "pg_class" "i" ON "i"."oid" = "ix"."indexrelid" INNER JOIN "pg_type" "types" ON "types"."oid" = "a"."atttypid" INNER JOIN "pg_am" "am" ON "i"."relam" = "am"."oid" LEFT JOIN "pg_constraint" "cnst" ON "cnst"."conname" = "i"."relname" WHERE "t"."relkind" IN ('r', 'p') AND "cnst"."contype" IS NULL AND (("ns"."nspname" = 'public' AND "t"."relname" = 'address'))
+[2024-05-31T01:28:20.337Z][QUERY]: SELECT "con"."conname" AS "constraint_name", "con"."nspname" AS "table_schema", "con"."relname" AS "table_name", "att2"."attname" AS "column_name", "ns"."nspname" AS "referenced_table_schema", "cl"."relname" AS "referenced_table_name", "att"."attname" AS "referenced_column_name", "con"."confdeltype" AS "on_delete", "con"."confupdtype" AS "on_update", "con"."condeferrable" AS "deferrable", "con"."condeferred" AS "deferred" FROM ( SELECT UNNEST ("con1"."conkey") AS "parent", UNNEST ("con1"."confkey") AS "child", "con1"."confrelid", "con1"."conrelid", "con1"."conname", "con1"."contype", "ns"."nspname", "cl"."relname", "con1"."condeferrable", CASE WHEN "con1"."condeferred" THEN 'INITIALLY DEFERRED' ELSE 'INITIALLY IMMEDIATE' END as condeferred, CASE "con1"."confdeltype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confdeltype", CASE "con1"."confupdtype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confupdtype" FROM "pg_class" "cl" INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_constraint" "con1" ON "con1"."conrelid" = "cl"."oid" WHERE "con1"."contype" = 'f' AND (("ns"."nspname" = 'public' AND "cl"."relname" = 'address')) ) "con" INNER JOIN "pg_attribute" "att" ON "att"."attrelid" = "con"."confrelid" AND "att"."attnum" = "con"."child" INNER JOIN "pg_class" "cl" ON "cl"."oid" = "con"."confrelid"  AND "cl"."relispartition" = 'f'INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_attribute" "att2" ON "att2"."attrelid" = "con"."conrelid" AND "att2"."attnum" = "con"."parent"
+[2024-05-31T01:28:21.337Z][QUERY]: ALTER TABLE "address" ADD CONSTRAINT "FK_35cd6c3fafec0bb5d072e24ea20" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE
+[2024-05-31T01:28:21.572Z][QUERY]: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1716322566903,"CreateAddressTable1716322566903"]
+[2024-05-31T01:28:21.914Z]Migration CreateAddressTable1716322566903 has been  executed successfully.
+[2024-05-31T01:28:21.915Z][QUERY]: CREATE TABLE "projects" ("id" SERIAL NOT NULL, "name" varchar(100) NOT NULL, "description" varchar(255) NOT NULL, "start_at" Date NOT NULL, "end_at" Date NOT NULL, "active" boolean NOT NULL DEFAULT true, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "UQ_2187088ab5ef2a918473cb99007" UNIQUE ("name"), CONSTRAINT "PK_6271df0a7aed1d6c0691ce6ac50" PRIMARY KEY ("id"))
+[2024-05-31T01:28:22.162Z][QUERY]: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1716493455943,"CreateProjectTable1716493455943"]
+[2024-05-31T01:28:22.500Z]Migration CreateProjectTable1716493455943 has been  executed successfully.
+[2024-05-31T01:28:22.501Z][QUERY]: CREATE TABLE "users_projects" ("id" SERIAL NOT NULL, "hours_worked" int NOT NULL DEFAULT 0, "user_id" int NOT NULL, "project_id" int NOT NULL, "created_at" timestamp NOT NULL DEFAULT now(), "updated_at" timestamp NOT NULL DEFAULT now(), CONSTRAINT "FK_0f280c70a3a6ab7f4cf3c658c4c" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE, CONSTRAINT "FK_741210c246defe00ed877a98f2a" FOREIGN KEY ("project_id") REFERENCES "projects" ("id") ON DELETE CASCADE, CONSTRAINT "PK_f3d2d1a584f1bbc6a91d7ea5773" PRIMARY KEY ("id"))
+[2024-05-31T01:28:22.741Z][QUERY]: CREATE INDEX "IDX_f3d2d1a584f1bbc6a91d7ea577" ON "users_projects" ("id") 
+[2024-05-31T01:28:22.985Z][QUERY]: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1716493475456,"CreateUserProject1716493475456"]
+[2024-05-31T01:28:23.251Z]Migration CreateUserProject1716493475456 has been  executed successfully.
+[2024-05-31T01:28:23.251Z][QUERY]: COMMIT
+[2024-05-31T01:29:42.005Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:29:42.221Z][QUERY]: SELECT version();
+[2024-05-31T01:29:42.423Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'migrations'
+[2024-05-31T01:29:42.634Z][QUERY]: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+[2024-05-31T01:29:42.838Z]4 migrations are already loaded in the database.
+[2024-05-31T01:29:42.838Z]5 migrations were found in the source code.
+[2024-05-31T01:29:42.838Z]CreateUserProject1716493475456 is the last executed migration. It was executed on Thu May 23 2024 16:44:35 GMT-0300 (Brasilia Standard Time).
+[2024-05-31T01:29:42.838Z]1 migrations are new migrations must be executed.
+[2024-05-31T01:29:42.839Z][QUERY]: START TRANSACTION
+[2024-05-31T01:29:44.113Z][QUERY]: START TRANSACTION
+[2024-05-31T01:29:44.331Z][QUERY]: INSERT INTO "users"("name", "email", "password", "birth_date", "active", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, DEFAULT, DEFAULT) RETURNING "id", "active", "created_at", "updated_at" -- PARAMETERS: ["admin","admin@admin.com","admin","1989-12-31",true]
+[2024-05-31T01:29:44.534Z][QUERY]: COMMIT
+[2024-05-31T01:29:44.733Z][QUERY]: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1716052161507,"CreateSeedUsersTable1716052161507"]
+[2024-05-31T01:29:44.933Z]Migration CreateSeedUsersTable1716052161507 has been  executed successfully.
+[2024-05-31T01:29:44.933Z][QUERY]: COMMIT
+[2024-05-31T01:30:56.910Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:30:57.124Z][QUERY]: SELECT version();
+[2024-05-31T01:30:57.325Z][QUERY]: START TRANSACTION
+[2024-05-31T01:30:57.525Z][QUERY]: SELECT * FROM current_schema()
+[2024-05-31T01:30:57.725Z][QUERY]: SELECT * FROM current_database()
+[2024-05-31T01:30:57.925Z][QUERY]: SELECT "table_schema", "table_name", obj_description(('"' || "table_schema" || '"."' || "table_name" || '"')::regclass, 'pg_class') AS table_comment FROM "information_schema"."tables" WHERE ("table_schema" = 'public' AND "table_name" = 'address') OR ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users')
+[2024-05-31T01:30:58.127Z][QUERY]: SELECT TRUE FROM information_schema.columns WHERE table_name = 'pg_class' and column_name = 'relispartition'
+[2024-05-31T01:30:58.330Z][QUERY]: SELECT columns.*, pg_catalog.col_description(('"' || table_catalog || '"."' || table_schema || '"."' || table_name || '"')::regclass::oid, ordinal_position) AS description, ('"' || "udt_schema" || '"."' || "udt_name" || '"')::"regtype" AS "regtype", pg_catalog.format_type("col_attr"."atttypid", "col_attr"."atttypmod") AS "format_type" FROM "information_schema"."columns" LEFT JOIN "pg_catalog"."pg_attribute" AS "col_attr" ON "col_attr"."attname" = "columns"."column_name" AND "col_attr"."attrelid" = ( SELECT "cls"."oid" FROM "pg_catalog"."pg_class" AS "cls" LEFT JOIN "pg_catalog"."pg_namespace" AS "ns" ON "ns"."oid" = "cls"."relnamespace" WHERE "cls"."relname" = "columns"."table_name" AND "ns"."nspname" = "columns"."table_schema" ) WHERE ("table_schema" = 'public' AND "table_name" = 'projects') OR ("table_schema" = 'public' AND "table_name" = 'users_projects') OR ("table_schema" = 'public' AND "table_name" = 'users') OR ("table_schema" = 'public' AND "table_name" = 'address')
+[2024-05-31T01:30:58.331Z][QUERY]: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "cnst"."conname" AS "constraint_name", pg_get_constraintdef("cnst"."oid") AS "expression", CASE "cnst"."contype" WHEN 'p' THEN 'PRIMARY' WHEN 'u' THEN 'UNIQUE' WHEN 'c' THEN 'CHECK' WHEN 'x' THEN 'EXCLUDE' END AS "constraint_type", "a"."attname" AS "column_name" FROM "pg_constraint" "cnst" INNER JOIN "pg_class" "t" ON "t"."oid" = "cnst"."conrelid" INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "cnst"."connamespace" LEFT JOIN "pg_attribute" "a" ON "a"."attrelid" = "cnst"."conrelid" AND "a"."attnum" = ANY ("cnst"."conkey") WHERE "t"."relkind" IN ('r', 'p') AND (("ns"."nspname" = 'public' AND "t"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'address'))
+[2024-05-31T01:30:58.331Z][QUERY]: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "i"."relname" AS "constraint_name", "a"."attname" AS "column_name", CASE "ix"."indisunique" WHEN 't' THEN 'TRUE' ELSE'FALSE' END AS "is_unique", pg_get_expr("ix"."indpred", "ix"."indrelid") AS "condition", "types"."typname" AS "type_name", "am"."amname" AS "index_type" FROM "pg_class" "t" INNER JOIN "pg_index" "ix" ON "ix"."indrelid" = "t"."oid" INNER JOIN "pg_attribute" "a" ON "a"."attrelid" = "t"."oid"  AND "a"."attnum" = ANY ("ix"."indkey") INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "t"."relnamespace" INNER JOIN "pg_class" "i" ON "i"."oid" = "ix"."indexrelid" INNER JOIN "pg_type" "types" ON "types"."oid" = "a"."atttypid" INNER JOIN "pg_am" "am" ON "i"."relam" = "am"."oid" LEFT JOIN "pg_constraint" "cnst" ON "cnst"."conname" = "i"."relname" WHERE "t"."relkind" IN ('r', 'p') AND "cnst"."contype" IS NULL AND (("ns"."nspname" = 'public' AND "t"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'users') OR ("ns"."nspname" = 'public' AND "t"."relname" = 'address'))
+[2024-05-31T01:30:58.331Z][QUERY]: SELECT "con"."conname" AS "constraint_name", "con"."nspname" AS "table_schema", "con"."relname" AS "table_name", "att2"."attname" AS "column_name", "ns"."nspname" AS "referenced_table_schema", "cl"."relname" AS "referenced_table_name", "att"."attname" AS "referenced_column_name", "con"."confdeltype" AS "on_delete", "con"."confupdtype" AS "on_update", "con"."condeferrable" AS "deferrable", "con"."condeferred" AS "deferred" FROM ( SELECT UNNEST ("con1"."conkey") AS "parent", UNNEST ("con1"."confkey") AS "child", "con1"."confrelid", "con1"."conrelid", "con1"."conname", "con1"."contype", "ns"."nspname", "cl"."relname", "con1"."condeferrable", CASE WHEN "con1"."condeferred" THEN 'INITIALLY DEFERRED' ELSE 'INITIALLY IMMEDIATE' END as condeferred, CASE "con1"."confdeltype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confdeltype", CASE "con1"."confupdtype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confupdtype" FROM "pg_class" "cl" INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_constraint" "con1" ON "con1"."conrelid" = "cl"."oid" WHERE "con1"."contype" = 'f' AND (("ns"."nspname" = 'public' AND "cl"."relname" = 'projects') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'users_projects') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'users') OR ("ns"."nspname" = 'public' AND "cl"."relname" = 'address')) ) "con" INNER JOIN "pg_attribute" "att" ON "att"."attrelid" = "con"."confrelid" AND "att"."attnum" = "con"."child" INNER JOIN "pg_class" "cl" ON "cl"."oid" = "con"."confrelid"  AND "cl"."relispartition" = 'f'INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_attribute" "att2" ON "att2"."attrelid" = "con"."conrelid" AND "att2"."attnum" = "con"."parent"
+[2024-05-31T01:30:59.150Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'typeorm_metadata'
+[2024-05-31T01:30:59.351Z][QUERY]: ALTER TABLE "address" DROP CONSTRAINT "FK_35cd6c3fafec0bb5d072e24ea20"
+[2024-05-31T01:30:59.572Z][QUERY]: ALTER TABLE "users_projects" DROP CONSTRAINT "FK_0f280c70a3a6ab7f4cf3c658c4c"
+[2024-05-31T01:30:59.802Z][QUERY]: ALTER TABLE "users_projects" DROP CONSTRAINT "FK_741210c246defe00ed877a98f2a"
+[2024-05-31T01:31:00.002Z][QUERY]: DROP INDEX "public"."IDX_f3d2d1a584f1bbc6a91d7ea577"
+[2024-05-31T01:31:00.214Z][QUERY]: ALTER TABLE "address" DROP COLUMN "state"
+[2024-05-31T01:31:00.417Z][QUERY]: ALTER TABLE "address" ADD "state" character varying NOT NULL
+[2024-05-31T01:31:00.621Z][QUERY]: ALTER TABLE "users_projects" ALTER COLUMN "hours_worked" DROP DEFAULT
+[2024-05-31T01:31:00.856Z][QUERY]: CREATE UNIQUE INDEX "email-idx" ON "users" ("email") 
+[2024-05-31T01:31:01.085Z][QUERY]: ALTER TABLE "address" ADD CONSTRAINT "FK_35cd6c3fafec0bb5d072e24ea20" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:31:01.285Z][QUERY]: ALTER TABLE "users_projects" ADD CONSTRAINT "FK_0f280c70a3a6ab7f4cf3c658c4c" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:31:01.492Z][QUERY]: ALTER TABLE "users_projects" ADD CONSTRAINT "FK_741210c246defe00ed877a98f2a" FOREIGN KEY ("project_id") REFERENCES "projects"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2024-05-31T01:31:01.692Z][QUERY]: COMMIT
+[2024-05-31T01:33:15.354Z][QUERY]: START TRANSACTION
+[2024-05-31T01:33:15.557Z][QUERY]: INSERT INTO "users"("name", "email", "password", "birth_date", "active", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, DEFAULT, DEFAULT) RETURNING "id", "active", "created_at", "updated_at" -- PARAMETERS: ["João","joao@hotmail.com","$2b$10$piP54O5jOlwNBa4MZKTSK.TA9bmz76BMZkLxkhGWFiuvEU2Cv435C","1993-12-10",true]
+[2024-05-31T01:33:15.759Z][QUERY]: COMMIT
+[2024-05-31T01:33:20.156Z][QUERY]: SELECT DISTINCT "distinctAlias"."User_id" AS "ids_User_id", "distinctAlias"."User_name" FROM (SELECT "User"."id" AS "User_id", "User"."name" AS "User_name", "User"."email" AS "User_email", "User"."password" AS "User_password", "User"."birth_date" AS "User_birth_date", "User"."active" AS "User_active", "User"."created_at" AS "User_created_at", "User"."updated_at" AS "User_updated_at", "User__User_address"."id" AS "User__User_address_id", "User__User_address"."street" AS "User__User_address_street", "User__User_address"."city" AS "User__User_address_city", "User__User_address"."state" AS "User__User_address_state", "User__User_address"."user_id" AS "User__User_address_user_id", "User__User_address"."created_at" AS "User__User_address_created_at", "User__User_address"."updated_at" AS "User__User_address_updated_at" FROM "users" "User" LEFT JOIN "address" "User__User_address" ON "User__User_address"."user_id"="User"."id") "distinctAlias" ORDER BY "distinctAlias"."User_name" ASC, "User_id" ASC LIMIT 10 OFFSET 10
+[2024-05-31T01:33:22.288Z][QUERY]: SELECT DISTINCT "distinctAlias"."User_id" AS "ids_User_id", "distinctAlias"."User_name" FROM (SELECT "User"."id" AS "User_id", "User"."name" AS "User_name", "User"."email" AS "User_email", "User"."password" AS "User_password", "User"."birth_date" AS "User_birth_date", "User"."active" AS "User_active", "User"."created_at" AS "User_created_at", "User"."updated_at" AS "User_updated_at", "User__User_address"."id" AS "User__User_address_id", "User__User_address"."street" AS "User__User_address_street", "User__User_address"."city" AS "User__User_address_city", "User__User_address"."state" AS "User__User_address_state", "User__User_address"."user_id" AS "User__User_address_user_id", "User__User_address"."created_at" AS "User__User_address_created_at", "User__User_address"."updated_at" AS "User__User_address_updated_at" FROM "users" "User" LEFT JOIN "address" "User__User_address" ON "User__User_address"."user_id"="User"."id") "distinctAlias" ORDER BY "distinctAlias"."User_name" ASC, "User_id" ASC LIMIT 10 OFFSET 10
+[2024-05-31T01:33:35.635Z][QUERY]: SELECT DISTINCT "distinctAlias"."User_id" AS "ids_User_id", "distinctAlias"."User_name" FROM (SELECT "User"."id" AS "User_id", "User"."name" AS "User_name", "User"."email" AS "User_email", "User"."password" AS "User_password", "User"."birth_date" AS "User_birth_date", "User"."active" AS "User_active", "User"."created_at" AS "User_created_at", "User"."updated_at" AS "User_updated_at", "User__User_address"."id" AS "User__User_address_id", "User__User_address"."street" AS "User__User_address_street", "User__User_address"."city" AS "User__User_address_city", "User__User_address"."state" AS "User__User_address_state", "User__User_address"."user_id" AS "User__User_address_user_id", "User__User_address"."created_at" AS "User__User_address_created_at", "User__User_address"."updated_at" AS "User__User_address_updated_at" FROM "users" "User" LEFT JOIN "address" "User__User_address" ON "User__User_address"."user_id"="User"."id") "distinctAlias" ORDER BY "distinctAlias"."User_name" ASC, "User_id" ASC LIMIT 10
+[2024-05-31T01:33:35.835Z][QUERY]: SELECT "User"."id" AS "User_id", "User"."name" AS "User_name", "User"."email" AS "User_email", "User"."password" AS "User_password", "User"."birth_date" AS "User_birth_date", "User"."active" AS "User_active", "User"."created_at" AS "User_created_at", "User"."updated_at" AS "User_updated_at", "User__User_address"."id" AS "User__User_address_id", "User__User_address"."street" AS "User__User_address_street", "User__User_address"."city" AS "User__User_address_city", "User__User_address"."state" AS "User__User_address_state", "User__User_address"."user_id" AS "User__User_address_user_id", "User__User_address"."created_at" AS "User__User_address_created_at", "User__User_address"."updated_at" AS "User__User_address_updated_at" FROM "users" "User" LEFT JOIN "address" "User__User_address" ON "User__User_address"."user_id"="User"."id" WHERE "User"."id" IN (1, 2) ORDER BY "User"."name" ASC
+[2024-05-31T01:33:44.899Z][QUERY]: START TRANSACTION
+[2024-05-31T01:33:45.100Z][QUERY]: INSERT INTO "address"("street", "city", "state", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, DEFAULT, DEFAULT) RETURNING "id", "created_at", "updated_at" -- PARAMETERS: ["Rua ewe","Cidade Y","MG",4]
+[2024-05-31T01:33:45.299Z][FAILED QUERY]: INSERT INTO "address"("street", "city", "state", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, DEFAULT, DEFAULT) RETURNING "id", "created_at", "updated_at" -- PARAMETERS: ["Rua ewe","Cidade Y","MG",4]
+[2024-05-31T01:33:45.299Z][QUERY ERROR]: error: insert or update on table "address" violates foreign key constraint "FK_35cd6c3fafec0bb5d072e24ea20"
+[2024-05-31T01:33:45.343Z][QUERY]: ROLLBACK
+[2024-05-31T01:33:58.149Z][QUERY]: START TRANSACTION
+[2024-05-31T01:33:58.349Z][QUERY]: INSERT INTO "address"("street", "city", "state", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, DEFAULT, DEFAULT) RETURNING "id", "created_at", "updated_at" -- PARAMETERS: ["Rua ewe","Cidade Y","MG",1]
+[2024-05-31T01:33:58.550Z][QUERY]: COMMIT
+[2024-05-31T01:34:01.430Z][QUERY]: SELECT "Address"."id" AS "Address_id", "Address"."street" AS "Address_street", "Address"."city" AS "Address_city", "Address"."state" AS "Address_state", "Address"."user_id" AS "Address_user_id", "Address"."created_at" AS "Address_created_at", "Address"."updated_at" AS "Address_updated_at", "Address__Address_users"."id" AS "Address__Address_users_id", "Address__Address_users"."name" AS "Address__Address_users_name", "Address__Address_users"."email" AS "Address__Address_users_email", "Address__Address_users"."password" AS "Address__Address_users_password", "Address__Address_users"."birth_date" AS "Address__Address_users_birth_date", "Address__Address_users"."active" AS "Address__Address_users_active", "Address__Address_users"."created_at" AS "Address__Address_users_created_at", "Address__Address_users"."updated_at" AS "Address__Address_users_updated_at" FROM "address" "Address" LEFT JOIN "users" "Address__Address_users" ON "Address__Address_users"."id"="Address"."user_id"
+[2024-05-31T01:34:07.546Z][QUERY]: START TRANSACTION
+[2024-05-31T01:34:07.744Z][QUERY]: INSERT INTO "projects"("name", "description", "start_at", "end_at", "active", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, DEFAULT, DEFAULT) RETURNING "id", "active", "created_at", "updated_at" -- PARAMETERS: ["Projeto Y","Projeto muito legal","2024-01-04","2024-02-10",true]
+[2024-05-31T01:34:07.947Z][QUERY]: COMMIT
+[2024-05-31T01:34:12.694Z][QUERY]: SELECT "Project"."id" AS "Project_id", "Project"."name" AS "Project_name", "Project"."description" AS "Project_description", "Project"."start_at" AS "Project_start_at", "Project"."end_at" AS "Project_end_at", "Project"."active" AS "Project_active", "Project"."created_at" AS "Project_created_at", "Project"."updated_at" AS "Project_updated_at" FROM "projects" "Project"
+[2024-05-31T01:34:17.995Z][QUERY]: START TRANSACTION
+[2024-05-31T01:34:18.193Z][QUERY]: INSERT INTO "users_projects"("hours_worked", "user_id", "project_id", "created_at", "updated_at") VALUES ($1, $2, $3, DEFAULT, DEFAULT) RETURNING "id", "created_at", "updated_at" -- PARAMETERS: [30,1,1]
+[2024-05-31T01:34:18.393Z][QUERY]: COMMIT
+[2024-05-31T01:34:26.332Z][QUERY]: SELECT "UserProject"."id" AS "UserProject_id", "UserProject"."hours_worked" AS "UserProject_hours_worked", "UserProject"."user_id" AS "UserProject_user_id", "UserProject"."project_id" AS "UserProject_project_id", "UserProject"."created_at" AS "UserProject_created_at", "UserProject"."updated_at" AS "UserProject_updated_at", "UserProject__UserProject_users"."id" AS "UserProject__UserProject_users_id", "UserProject__UserProject_users"."name" AS "UserProject__UserProject_users_name", "UserProject__UserProject_users"."email" AS "UserProject__UserProject_users_email", "UserProject__UserProject_users"."password" AS "UserProject__UserProject_users_password", "UserProject__UserProject_users"."birth_date" AS "UserProject__UserProject_users_birth_date", "UserProject__UserProject_users"."active" AS "UserProject__UserProject_users_active", "UserProject__UserProject_users"."created_at" AS "UserProject__UserProject_users_created_at", "UserProject__UserProject_users"."updated_at" AS "UserProject__UserProject_users_updated_at", "UserProject__UserProject_projects"."id" AS "UserProject__UserProject_projects_id", "UserProject__UserProject_projects"."name" AS "UserProject__UserProject_projects_name", "UserProject__UserProject_projects"."description" AS "UserProject__UserProject_projects_description", "UserProject__UserProject_projects"."start_at" AS "UserProject__UserProject_projects_start_at", "UserProject__UserProject_projects"."end_at" AS "UserProject__UserProject_projects_end_at", "UserProject__UserProject_projects"."active" AS "UserProject__UserProject_projects_active", "UserProject__UserProject_projects"."created_at" AS "UserProject__UserProject_projects_created_at", "UserProject__UserProject_projects"."updated_at" AS "UserProject__UserProject_projects_updated_at" FROM "users_projects" "UserProject" LEFT JOIN "users" "UserProject__UserProject_users" ON "UserProject__UserProject_users"."id"="UserProject"."user_id"  LEFT JOIN "projects" "UserProject__UserProject_projects" ON "UserProject__UserProject_projects"."id"="UserProject"."project_id"
